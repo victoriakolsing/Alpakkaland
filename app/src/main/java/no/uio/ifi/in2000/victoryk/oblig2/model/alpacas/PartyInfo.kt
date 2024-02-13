@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PartyInfo(
+    val id: String,
     val name: String,
     val leader: String,
     val img: String,
