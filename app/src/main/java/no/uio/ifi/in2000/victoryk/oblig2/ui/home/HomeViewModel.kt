@@ -1,5 +1,6 @@
 package no.uio.ifi.in2000.victoryk.oblig2.ui.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +31,7 @@ class HomeViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            repository.loadParties()
+            repository.getParties()
         }
     }
 }
