@@ -3,7 +3,6 @@ package no.uio.ifi.in2000.victoryk.oblig2.ui.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -14,9 +13,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 
@@ -44,7 +43,7 @@ fun PartyCard(
 }
 
 @Composable 
-fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = viewModel()) {
+fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = viewModel()) {
     val homeUiState by homeViewModel.uiState.collectAsState() // pæser data til viewmodel
     Row {
         LazyVerticalGrid(
@@ -53,7 +52,7 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
             items(homeUiState.parties) { partyInfo ->
                 PartyCard(
                     partyInfo = partyInfo,
-                    modifier = modifier.padding(all = 8.dp)
+                    modifier = Modifier.padding(all = 8.dp)
                 )
             }
         }

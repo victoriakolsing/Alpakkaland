@@ -1,17 +1,12 @@
 package no.uio.ifi.in2000.victoryk.oblig2.ui.home
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import no.uio.ifi.in2000.victoryk.oblig2.data.alpacas.AlpacaPartiesDataSource
 import no.uio.ifi.in2000.victoryk.oblig2.data.alpacas.AlpacaPartiesRepository
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 

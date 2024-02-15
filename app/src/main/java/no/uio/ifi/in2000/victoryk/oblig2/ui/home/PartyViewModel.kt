@@ -17,7 +17,7 @@ class PartyViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(PartyUiState())
     val uiState: StateFlow<PartyUiState> = _uiState.asStateFlow()
 
-    fun getPartyInfo() {
-
+    suspend fun getPartyInfo(partyId: String) {
+        repository.getPartyByID(partyId)
     }
 }
