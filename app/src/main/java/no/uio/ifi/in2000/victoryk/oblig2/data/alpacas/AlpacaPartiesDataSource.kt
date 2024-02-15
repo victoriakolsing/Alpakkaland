@@ -22,6 +22,9 @@ class AlpacaPartiesDataSource {
                 json()
             }
         }
+
+        // FIKS COIL FOR Å HENTE BILDER
+        // uhh returnerer denne hele teksten som ett objekt (liste med ett element)?
         return Json.decodeFromString<List<PartyInfo>>(client.get(BASE_URL).body<String>())
     }
     suspend fun getPartyById() : PartyInfo {

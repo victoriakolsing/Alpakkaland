@@ -33,12 +33,10 @@ fun PartyCard(
         Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = modifier) {
                 Text(text = partyInfo.name)
-
                 AsyncImage(
                     modifier = modifier,
                     model = partyInfo.img,
                     contentDescription = null)
-
                 Text(text = partyInfo.leader)
             }
         }
@@ -46,17 +44,13 @@ fun PartyCard(
 }
 
 @Composable 
-fun HomeScreen(
-    modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel = viewModel()
-) {
-    val parties by homeViewModel.homeUiState.collectAsState()
-
+fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = viewModel()) {
+    val homeUiState by homeViewModel.uiState.collectAsState() // pæser data til viewmodel
     Row {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 128.dp)
         ) {
-            items(parties.parties) { partyInfo ->
+            items(homeUiState.parties) { partyInfo ->
                 PartyCard(
                     partyInfo = partyInfo,
                     modifier = modifier.padding(all = 8.dp)
