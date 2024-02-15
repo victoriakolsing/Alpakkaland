@@ -17,16 +17,12 @@ private const val BASE_URL =
 
 
 class AlpacaPartiesDataSource {
-    suspend fun getFromURL(): PartyInfo {
+    suspend fun getParties(): List<PartyInfo> {
         val client = HttpClient() {
             install(ContentNegotiation) {
                 json()
             }
         }
-        return Json.decodeFromString<PartyInfo>(client.get(BASE_URL).body<String>())
-    }
-
-    suspend fun getPartyInfo() {
-
+        return Json.decodeFromString<List<PartyInfo>>(client.get(BASE_URL).body<String>())
     }
 }

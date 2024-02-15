@@ -58,7 +58,7 @@ fun HomeScreen(
         ) {
             items(parties.parties) { partyInfo ->
                 PartyCard(
-                    partyInfo = partyInfo, // WOWOWOWOWO PLACEHOLDER HARDKODET INTEGER HER
+                    partyInfo = partyInfo,
                     modifier = modifier.padding(all = 8.dp)
                 )
             }
