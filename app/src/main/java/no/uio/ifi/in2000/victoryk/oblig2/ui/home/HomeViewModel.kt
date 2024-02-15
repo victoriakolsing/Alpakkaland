@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import no.uio.ifi.in2000.victoryk.oblig2.data.alpacas.AlpacaPartiesDataSource
 import no.uio.ifi.in2000.victoryk.oblig2.data.alpacas.AlpacaPartiesRepository
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 
@@ -21,7 +22,7 @@ data class HomeUiState ( // Model class for state UI
 
 class HomeViewModel : ViewModel() {
 
-    private val repository: AlpacaPartiesRepository? = null
+    private val repository: AlpacaPartiesRepository = AlpacaPartiesRepository()
 
     // StateFlow is a data holder observable flow that emits the current and new state updates.
     // Its value property reflects the current state value.
@@ -33,7 +34,7 @@ class HomeViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            repository?.getParties()
+            repository.getParties()
         }
     }
 }

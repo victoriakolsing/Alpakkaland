@@ -15,7 +15,6 @@ import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 private const val BASE_URL =
     "https://www.uio.no/studier/emner/matnat/ifi/IN2000/v24/obligatoriske-oppgaver/alpacaparties.json"
 
-
 class AlpacaPartiesDataSource {
     suspend fun getParties(): List<PartyInfo> {
         val client = HttpClient() {
@@ -24,5 +23,13 @@ class AlpacaPartiesDataSource {
             }
         }
         return Json.decodeFromString<List<PartyInfo>>(client.get(BASE_URL).body<String>())
+    }
+    suspend fun getPartyById() : PartyInfo {
+        val client = HttpClient() {
+            install(ContentNegotiation) {
+                json()
+            }
+        }
+        return Json.decodeFromString<PartyInfo>(client.get(BASE_URL).body<String>())
     }
 }
