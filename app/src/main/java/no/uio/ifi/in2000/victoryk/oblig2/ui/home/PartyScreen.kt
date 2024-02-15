@@ -31,7 +31,6 @@ import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 fun PartyScreen(
     partyInfo: PartyInfo,
     navController: NavHostController,
-    partyId: String = navController.,
     partyViewModel: PartyViewModel = PartyViewModel()
 ) {
     val partyUiState by partyViewModel.uiState.collectAsState()
