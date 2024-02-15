@@ -21,7 +21,7 @@ data class HomeUiState ( // Model class for state UI
 
 class HomeViewModel : ViewModel() {
 
-    private val repository: AlpacaPartiesRepository = AlpacaPartiesRepository()
+    private val repository: AlpacaPartiesRepository? = null
 
     // StateFlow is a data holder observable flow that emits the current and new state updates.
     // Its value property reflects the current state value.
@@ -33,7 +33,7 @@ class HomeViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            repository.getParties()
+            repository?.getParties()
         }
     }
 }
