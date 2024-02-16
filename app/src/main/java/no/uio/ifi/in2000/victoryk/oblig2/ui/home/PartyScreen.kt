@@ -1,6 +1,5 @@
 package no.uio.ifi.in2000.victoryk.oblig2.ui.home
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,17 +23,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 
 @Composable
 fun PartyScreen(
-    partyInfo: PartyInfo,
-    navController: NavHostController,
-    partyViewModel: PartyViewModel = PartyViewModel()
+    partyViewModel: PartyViewModel = PartyViewModel(),
+    partyId: String
 ) {
     val partyUiState by partyViewModel.uiState.collectAsState()
+    val partyInfo = partyUiState.party
+
+    LaunchedEffect(Unit) {
+        partyViewModel.getPartyInfo(partyId)
+    }
+
+
 
     Row(modifier = Modifier, verticalAlignment = Alignment.CenterVertically) {
         Column(
@@ -42,7 +46,7 @@ fun PartyScreen(
         ) {
             // 1. Partinavn
             Text(
-                text = partyInfo.name,
+                text = partyViewModel.name,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Bold,
                 fontSize = 28.sp,
@@ -51,13 +55,15 @@ fun PartyScreen(
 
             // 2. Bilde
             AsyncImage(
-                model = partyInfo.img,
+                model = partyViewModel.img,
                 contentDescription = null,
-                modifier = Modifier.height(150.dp).width(150.dp)
+                modifier = Modifier
+                    .height(150.dp)
+                    .width(150.dp)
             )    // contentdescription som beskrivelse eller null?
 
             // 3. Leder
-            Text(text = partyInfo.leader)
+            Text(text = partyViewModel.leader)
 
             // 4. farge
             Box(
@@ -65,21 +71,10 @@ fun PartyScreen(
                     .fillMaxWidth()
                     .height(8.dp)
                     .clip(RectangleShape)
-                    .background(colorSpacer(partyInfo))
+                    .background(color = Color(partyViewModel.color.toInt()))
             )
             // 5. Beskrivelse
-            Text(text = partyInfo.description)
+            Text(text = partyViewModel.description)
         }
     }
 }
-
-@Composable
-fun colorSpacer(partyInfo: PartyInfo): Color {
-    try {
-        return Color(partyInfo.color.toInt())
-    } catch (exception: IllegalArgumentException) {
-        Log.e("ERROR", "Could not convert party color to int. Returning default color: White")
-    }
-    return Color.White
-}
-
