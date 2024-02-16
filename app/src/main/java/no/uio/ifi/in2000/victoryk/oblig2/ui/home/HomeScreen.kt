@@ -13,6 +13,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,10 +30,14 @@ import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 @Composable
 fun AlpacaCard(partyInfo: PartyInfo, onClick: (PartyInfo) -> Unit) {
 
+    // temporary values to test composable
+    /*
     val temporaryPartyName = "Party name"
     val temporaryImageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQAWoLZpHFCADozs4_TEvQwAXwEURTgakqV-9auJ_klHJcF1Wrxg&s"
     val temporaryLeaderName = "Leader"
     val temporaryPartyColor: Color = Color.Red
+    */
+
 
     // REMEMBER TO ADD HANDLING FOR IMAGES AND COLOURS AND SUCH
 
@@ -65,11 +70,18 @@ fun PreviewAlpacaCard() {
 }
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+
+// add navcontroller as arg
+fun HomeScreen(viewModel: HomeViewModel, ) {
 
     val partyListState: StateFlow<List<PartyInfo>> = viewModel.partyList
     val partyList = partyListState.collectAsState(initial = emptyList())
+    val partyInfoList by viewModel.partyList.collectAsState()
 
+
+    PartyList(parties = partyInfoList) {partyInfo ->
+        // add navigation to card here
+    }
 
 }
 
