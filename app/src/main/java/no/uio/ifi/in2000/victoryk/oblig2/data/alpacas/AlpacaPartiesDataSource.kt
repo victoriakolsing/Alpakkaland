@@ -1,11 +1,10 @@
 package no.uio.ifi.in2000.victoryk.oblig2.data.alpacas
 
-import android.util.Log
-import io.ktor.client.*
+import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.client.request.get
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 
@@ -26,13 +25,5 @@ class AlpacaPartiesDataSource {
         // FIKS COIL FOR Å HENTE BILDER
         // uhh returnerer denne hele teksten som ett objekt (liste med ett element)?
         return Json.decodeFromString<List<PartyInfo>>(client.get(BASE_URL).body<String>())
-    }
-    suspend fun getPartyById() : PartyInfo {
-        val client = HttpClient() {
-            install(ContentNegotiation) {
-                json()
-            }
-        }
-        return Json.decodeFromString<PartyInfo>(client.get(BASE_URL).body<String>())
     }
 }

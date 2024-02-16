@@ -13,6 +13,6 @@ class AlpacaPartiesRepository(private val partyDataSource: AlpacaPartiesDataSour
     }
 
     suspend fun getPartyByID(partyId: String): PartyInfo {
-        return partyDataSource.getPartyById()
+        return getParties()[partyId.toInt() - 1]
     }
 }
