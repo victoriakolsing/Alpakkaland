@@ -16,7 +16,9 @@ data class partyList (
 */
 
 
-class HomeViewModel(private val repo: AlpacaPartiesRepository): ViewModel() {
+class HomeViewModel(): ViewModel() {
+
+    private val repo: AlpacaPartiesRepository = AlpacaPartiesRepository()
 
     /*
     private val _partyList = MutableStateFlow(partyList())

@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.flow.StateFlow
@@ -27,8 +27,9 @@ import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 // Viser kortene i en LazyColumn eller LazyVerticalGrid.
 // Denne skal kun observere UI-staten som ligger i HomeViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AlpacaCard(partyInfo: PartyInfo, onClick: (PartyInfo) -> Unit) {
+fun AlpacaCard(partyInfo: PartyInfo, onNavigateToParty: (PartyInfo) -> Unit) {
 
     // temporary values to test composable
     /*
@@ -38,11 +39,11 @@ fun AlpacaCard(partyInfo: PartyInfo, onClick: (PartyInfo) -> Unit) {
     val temporaryPartyColor: Color = Color.Red
     */
 
-
     // REMEMBER TO ADD HANDLING FOR IMAGES AND COLOURS AND SUCH
 
     Card(
         modifier = Modifier.size(150.dp),
+        onClick = { onNavigateToParty }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -63,36 +64,18 @@ fun AlpacaCard(partyInfo: PartyInfo, onClick: (PartyInfo) -> Unit) {
     }
 }
 
-
-@Preview
-@Composable
-fun PreviewAlpacaCard() {
-}
-
 @Composable
 
 // add navcontroller as arg
-fun HomeScreen(viewModel: HomeViewModel, ) {
+fun HomeScreen(viewModel: HomeViewModel, onNavigateToParty: (PartyInfo) -> Unit) {
 
     val partyListState: StateFlow<List<PartyInfo>> = viewModel.partyList
-    val partyList = partyListState.collectAsState(initial = emptyList())
+    // val partyList = partyListState.collectAsState(initial = emptyList())
     val partyInfoList by viewModel.partyList.collectAsState()
 
-
-    PartyList(parties = partyInfoList) {partyInfo ->
-        // add navigation to card here
-    }
-
-}
-
-
-@Composable
-fun PartyList(parties: List<PartyInfo>, onPartyClicked: (PartyInfo) -> Unit) {
-    LazyColumn {
-        items(parties) { party ->
-            AlpacaCard(partyInfo = party) {
-                onPartyClicked(party)
-            }
+    LazyColumn{
+        items(partyInfoList) {party ->
+            AlpacaCard(partyInfo = party, onNavigateToParty = onNavigateToParty)
         }
     }
 }

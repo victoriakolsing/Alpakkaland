@@ -6,7 +6,10 @@ import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 // og som tilbyr en metode ViewModel-en kan bruke for å få informasjon om partiene.
 // Denne dataen skal være på formatet List<PartyInfo>.
 
-class AlpacaPartiesRepository(val dataSource: AlpacaPartiesDataSource) {
+class AlpacaPartiesRepository() {
+
+    private val dataSource: AlpacaPartiesDataSource = AlpacaPartiesDataSource()
+
     suspend fun getParties(): List<PartyInfo> {
         return dataSource.getPartyInfoList()
     }
