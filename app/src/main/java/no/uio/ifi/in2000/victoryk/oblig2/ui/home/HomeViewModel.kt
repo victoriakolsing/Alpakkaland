@@ -16,7 +16,8 @@ class HomeViewModel(): ViewModel() {
 
     private fun getPartyList() {
         viewModelScope.launch {
-            _partyList.value = repo.getParties()
+            val test = repo.getParties();
+            _partyList.value = test;
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -43,6 +44,7 @@ fun AlpacaCard(
             .clickable {
                 navController.navigate("PartyScreen/$id")
             }
+            .padding(all = 8.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,9 +58,9 @@ fun AlpacaCard(
                 modifier = Modifier
                     .size(64.dp)
                     .clip(CircleShape)
-                    .border(2.dp, color = Color(color.toInt()), CircleShape)
+                    .border(2.dp, color = getColor(color), CircleShape)
             )
-            Text(text = leader)
+            Text(text = "Leder: $leader")
         }
     }
 }
@@ -67,7 +69,11 @@ fun AlpacaCard(
 fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
     val partyInfoList by viewModel.partyList.collectAsState()
 
-    LazyColumn{
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         items(partyInfoList) {partyInfo ->
             AlpacaCard(
                 id = partyInfo.id,
@@ -78,4 +84,9 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
                 navController = navController)
         }
     }
+}
+
+@Composable
+fun getColor(color: String): Color {
+    return Color(android.graphics.Color.parseColor(color))
 }

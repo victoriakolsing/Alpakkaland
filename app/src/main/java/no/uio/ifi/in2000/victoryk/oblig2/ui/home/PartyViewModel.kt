@@ -22,7 +22,7 @@ class PartyViewModel(savedStateHandle: SavedStateHandle): ViewModel() {
      fun showPartyInfo(partyId: String) {
         viewModelScope.launch {
             _uiState.onStart {
-                party = repo.getById(partyId.toInt())!!
+                 // party = repo.getById(partyId.toInt())!!
             }
         }
     }

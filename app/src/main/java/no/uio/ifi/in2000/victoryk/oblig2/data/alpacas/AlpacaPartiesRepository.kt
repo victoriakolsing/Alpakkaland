@@ -11,11 +11,15 @@ class AlpacaPartiesRepository() {
     private val dataSource: AlpacaPartiesDataSource = AlpacaPartiesDataSource()
 
     suspend fun getParties(): List<PartyInfo> {
-        return dataSource.fml()
+        val array = dataSource.fml();
+        val arrayToList = array.toList()
+        return arrayToList;
     }
 
+/*
     suspend fun getById(id: Int): PartyInfo? {
         val partyList = dataSource.fml()
         return partyList.find { it.id.toInt() == id }
     }
+    */
 }

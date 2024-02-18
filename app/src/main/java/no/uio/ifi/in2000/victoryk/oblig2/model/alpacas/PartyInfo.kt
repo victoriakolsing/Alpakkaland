@@ -11,6 +11,12 @@ data class PartyInfo (
     val leader: String = "",
     val img: String = "",
     val color: String = "",
-    val description: String = "",
+    val description: String = ""
 )
+
+@Serializable
+data class Parties (
+    val parties: ArrayList<PartyInfo>
+)
+
 
