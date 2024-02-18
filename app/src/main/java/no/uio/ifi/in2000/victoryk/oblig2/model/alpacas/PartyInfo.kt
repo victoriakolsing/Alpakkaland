@@ -1,8 +1,10 @@
 package no.uio.ifi.in2000.victoryk.oblig2.model.alpacas
 
+import kotlinx.serialization.Serializable
+
 
 // Dataklasse som inneholder de samme feltene som i endepunktet
-
+@Serializable
 data class PartyInfo (
     val id: String = "",
     val name: String = "",
