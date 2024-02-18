@@ -5,7 +5,6 @@ package no.uio.ifi.in2000.victoryk.oblig2.data.alpacas
 import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
@@ -17,12 +16,9 @@ class AlpacaPartiesDataSource {
     private val url =
         "https://www.uio.no/studier/emner/matnat/ifi/IN2000/v24/obligatoriske-oppgaver/alpacaparties.json"
 
-    private val client = HttpClient(CIO) {
+    private val client = HttpClient() {
         install(ContentNegotiation) {
-            json(Json {
-                prettyPrint = true
-                isLenient = true
-            })
+            json(Json)
             Log.i("YEE", "Client started")
         }
     }

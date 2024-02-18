@@ -7,13 +7,10 @@ import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 // Denne dataen skal være på formatet List<PartyInfo>.
 
 class AlpacaPartiesRepository() {
-
     private val dataSource: AlpacaPartiesDataSource = AlpacaPartiesDataSource()
-
     suspend fun getParties(): List<PartyInfo> {
         val array = dataSource.fml();
-        val arrayToList = array.toList()
-        return arrayToList;
+        return array.toList() // trenger man toList? eller?
     }
 
 /*
