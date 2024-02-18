@@ -13,10 +13,8 @@ import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 
 class PartyViewModel(savedStateHandle: SavedStateHandle): ViewModel() {
     private val repo: AlpacaPartiesRepository = AlpacaPartiesRepository()
-
     private val partyId: String = checkNotNull(savedStateHandle["partyId"])
     private lateinit var party: PartyInfo
-
 
     private val _uiState = MutableStateFlow(PartyInfo())
     val uiState: StateFlow<PartyInfo> = _uiState.asStateFlow()
@@ -24,12 +22,8 @@ class PartyViewModel(savedStateHandle: SavedStateHandle): ViewModel() {
      fun showPartyInfo(partyId: String) {
         viewModelScope.launch {
             _uiState.onStart {
-                findParty(partyId)
+                party = repo.getById(partyId.toInt())!!
             }
         }
-    }
-
-    private suspend fun findParty(partyId: String) {
-        party = repo.getById(partyId.toInt())!!
     }
 }

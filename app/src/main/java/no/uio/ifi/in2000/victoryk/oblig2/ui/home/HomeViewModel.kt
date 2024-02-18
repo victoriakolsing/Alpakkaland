@@ -9,18 +9,8 @@ import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.victoryk.oblig2.data.alpacas.AlpacaPartiesRepository
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 
-// gir type mismatch i getPartyList()
-/*
-data class partyList (
-    val parties: List<PartyInfo> = emptyList()
-)
-*/
-
-
 class HomeViewModel(): ViewModel() {
-
     private val repo: AlpacaPartiesRepository = AlpacaPartiesRepository()
-
     private val _partyList = MutableStateFlow<List<PartyInfo>>(emptyList())
     val partyList: StateFlow<List<PartyInfo>> = _partyList.asStateFlow()
 

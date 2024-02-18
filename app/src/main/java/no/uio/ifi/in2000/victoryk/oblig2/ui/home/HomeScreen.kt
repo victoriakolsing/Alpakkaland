@@ -23,8 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import kotlinx.coroutines.flow.StateFlow
-import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 
 // Viser kortene i en LazyColumn eller LazyVerticalGrid.
 // Denne skal kun observere UI-staten som ligger i HomeViewModel
@@ -67,8 +65,6 @@ fun AlpacaCard(
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
-    val partyListState: StateFlow<List<PartyInfo>> = viewModel.partyList
-    // val partyList = partyListState.collectAsState(initial = emptyList())
     val partyInfoList by viewModel.partyList.collectAsState()
 
     LazyColumn{

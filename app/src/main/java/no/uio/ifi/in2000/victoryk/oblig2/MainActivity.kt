@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -19,16 +21,21 @@ import no.uio.ifi.in2000.victoryk.oblig2.ui.home.PartyScreen
 import no.uio.ifi.in2000.victoryk.oblig2.ui.home.PartyViewModel
 import no.uio.ifi.in2000.victoryk.oblig2.ui.theme.Victoryk_oblig2Theme
 
+val SuperLightPink = Color(0xfffff0f3)
+val LightPink = Color(0xffffc1cc)
+val Blush = Color(0xffde5d83)
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Victoryk_oblig2Theme {
-                // A surface container using the 'background' color from the theme
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    Text("pls")
                     // NAVIGATION ---------------------------------------------------------------------------------------------------------------------
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "HomeScreen") {
@@ -45,17 +52,20 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         ) { backStackEntry ->
-                            PartyScreen (
-                                viewModel = PartyViewModel(savedStateHandle = SavedStateHandle()),
-                                backStackEntry.arguments?.getString("partyId")
-                            )
+                            backStackEntry.arguments?.getString("partyId")?.let {
+                                PartyScreen (
+                                    viewModel = PartyViewModel(savedStateHandle = SavedStateHandle()),
+                                    it
+                                )
+                            }
                         }
                     }
                     // APP START ---------------------------------------------------------------------------------------------------------------------
                     val homeViewModel = HomeViewModel()
-                    HomeScreen(
+                    HomeScreen (
                         viewModel = homeViewModel,
-                        navController = navController)
+                        navController = navController
+                    )
                 }
             }
         }
