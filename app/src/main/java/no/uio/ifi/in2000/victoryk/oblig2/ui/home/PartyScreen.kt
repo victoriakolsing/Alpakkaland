@@ -35,9 +35,7 @@ import no.uio.ifi.in2000.victoryk.oblig2.LightPink
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PartyScreen(
-    viewModel: PartyViewModel = PartyViewModel(savedStateHandle = SavedStateHandle()),
-    partyId: String
-) {
+    viewModel: PartyViewModel = PartyViewModel(savedStateHandle = SavedStateHandle())) {
 
     val state by viewModel.uiState.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -57,7 +55,6 @@ fun PartyScreen(
         }
     ) {
         PartyLayout(
-            id = partyId,
             name = state.name,
             leader = state.leader,
             img = state.img,
@@ -69,7 +66,6 @@ fun PartyScreen(
 
 @Composable
 fun PartyLayout(
-    id: String,
     name: String,
     leader: String,
     img: String,

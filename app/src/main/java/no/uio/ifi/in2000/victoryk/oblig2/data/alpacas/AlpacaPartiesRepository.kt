@@ -13,10 +13,8 @@ class AlpacaPartiesRepository() {
         return array.toList() // trenger man toList? eller?
     }
 
-/*
     suspend fun getById(id: Int): PartyInfo? {
         val partyList = dataSource.fml()
         return partyList.find { it.id.toInt() == id }
     }
-    */
 }

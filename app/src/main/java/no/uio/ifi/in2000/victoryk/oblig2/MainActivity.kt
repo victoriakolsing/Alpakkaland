@@ -54,8 +54,7 @@ class MainActivity : ComponentActivity() {
                         ) { backStackEntry ->
                             backStackEntry.arguments?.getString("partyId")?.let {
                                 PartyScreen (
-                                    viewModel = PartyViewModel(savedStateHandle = SavedStateHandle()),
-                                    it
+                                    viewModel = PartyViewModel(savedStateHandle = SavedStateHandle())
                                 )
                             }
                         }
