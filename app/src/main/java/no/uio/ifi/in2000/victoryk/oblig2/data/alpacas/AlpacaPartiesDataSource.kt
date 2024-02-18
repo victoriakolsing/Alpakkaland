@@ -10,29 +10,18 @@ import kotlinx.serialization.json.Json
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 
 class AlpacaPartiesDataSource {
-    private val url = "https://www.uio.no/studier/emner/matnat/ifi/IN2000/v24/obligatoriske-oppgaver/alpacaparties.json"
-    private val gson = Gson()
+    private val url =
+        "https://www.uio.no/studier/emner/matnat/ifi/IN2000/v24/obligatoriske-oppgaver/alpacaparties.json"
 
     private val client = HttpClient() {
         install(ContentNegotiation) {
             json(Json)
         }
     }
-
     suspend fun fml(): List<PartyInfo> {
         val response = client.get(url).toString()
         val typeToken = object : TypeToken<List<PartyInfo>>() {}.type
         return Gson().fromJson(response, typeToken)
     }
-
-
-
-
-
-    /* suspend fun getPartyInfoList(): List<PartyInfo> {
-        val response = HttpClient().get(url)
-        return Json.decodeFromString<List<PartyInfo>>(response.toString())
-    }
-    */
 }
 
