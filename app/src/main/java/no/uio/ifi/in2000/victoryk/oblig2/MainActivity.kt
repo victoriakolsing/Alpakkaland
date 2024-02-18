@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,27 +29,33 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // NAVIGATION
-
+                    // NAVIGATION ---------------------------------------------------------------------------------------------------------------------
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "HomeScreen") {
-                        composable("HomeScreen") {
+                        composable(route = "HomeScreen") {
                             HomeScreen (
                                 viewModel = HomeViewModel(),
-                                onNavigateToParty = { navController.navigate("PartyScreen/{partyId}") }
+                                navController = navController
                             )
                         }
-                        composable("PartyScreen/{partyId}", arguments = listOf(navArgument("partyId") { type = NavType.StringType })) { backStackEntry ->
+                        composable(route = "PartyScreen/{partyId}",
+                            arguments = listOf(
+                                navArgument(name = "partyId") {
+                                    type = NavType.StringType
+                                }
+                            )
+                        ) { backStackEntry ->
                             PartyScreen (
-                                viewModel = PartyViewModel(),
+                                viewModel = PartyViewModel(savedStateHandle = SavedStateHandle()),
                                 backStackEntry.arguments?.getString("partyId")
                             )
                         }
                     }
-
-
-
-
+                    // APP START ---------------------------------------------------------------------------------------------------------------------
+                    val homeViewModel = HomeViewModel()
+                    HomeScreen(
+                        viewModel = homeViewModel,
+                        navController = navController)
                 }
             }
         }

@@ -2,6 +2,7 @@ package no.uio.ifi.in2000.victoryk.oblig2.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.flow.StateFlow
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
@@ -29,53 +31,55 @@ import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AlpacaCard(partyInfo: PartyInfo, onNavigateToParty: (PartyInfo) -> Unit) {
-
-    // temporary values to test composable
-    /*
-    val temporaryPartyName = "Party name"
-    val temporaryImageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQAWoLZpHFCADozs4_TEvQwAXwEURTgakqV-9auJ_klHJcF1Wrxg&s"
-    val temporaryLeaderName = "Leader"
-    val temporaryPartyColor: Color = Color.Red
-    */
-
-    // REMEMBER TO ADD HANDLING FOR IMAGES AND COLOURS AND SUCH
-
+fun AlpacaCard(
+    id: String,
+    name: String,
+    img: String,
+    leader: String,
+    color: String,
+    navController: NavController
+) {
     Card(
-        modifier = Modifier.size(150.dp),
-        onClick = { onNavigateToParty }
+        modifier = Modifier
+            .size(150.dp)
+            .clickable {
+                navController.navigate("PartyScreen/$id")
+            }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(text = partyInfo.name)
+            Text(text = name)
             Image(
-                painter = rememberAsyncImagePainter(partyInfo.img),
+                painter = rememberAsyncImagePainter(img),
                 contentDescription = null,
                 modifier = Modifier
                     .size(64.dp)
                     .clip(CircleShape)
-                    .border(2.dp, color = Color(partyInfo.color.toInt()), CircleShape)
+                    .border(2.dp, color = Color(color.toInt()), CircleShape)
             )
-            Text(text = partyInfo.leader)
+            Text(text = leader)
         }
     }
 }
 
 @Composable
-
-// add navcontroller as arg
-fun HomeScreen(viewModel: HomeViewModel, onNavigateToParty: (PartyInfo) -> Unit) {
-
+fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
     val partyListState: StateFlow<List<PartyInfo>> = viewModel.partyList
     // val partyList = partyListState.collectAsState(initial = emptyList())
     val partyInfoList by viewModel.partyList.collectAsState()
 
     LazyColumn{
-        items(partyInfoList) {party ->
-            AlpacaCard(partyInfo = party, onNavigateToParty = onNavigateToParty)
+        items(partyInfoList) {partyInfo ->
+            AlpacaCard(
+                id = partyInfo.id,
+                name = partyInfo.name,
+                img = partyInfo.img,
+                leader = partyInfo.leader,
+                color = partyInfo.color,
+                navController = navController)
         }
     }
 }
