@@ -34,8 +34,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import no.uio.ifi.in2000.victoryk.oblig2.Blush
 import no.uio.ifi.in2000.victoryk.oblig2.SuperLightPink
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
+import no.uio.ifi.in2000.victoryk.oblig2.model.votes.District
 
 @Composable
 fun AlpacaCard(
@@ -103,34 +105,38 @@ fun HomeScreen(
                 placeholder = { Text(text = "Please choose district") },
                 readOnly = true,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
-                colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                colors = ExposedDropdownMenuDefaults.textFieldColors(
+                    unfocusedContainerColor = SuperLightPink,
+                    focusedContainerColor = SuperLightPink,
+                ),
                 modifier = Modifier
                     .menuAnchor()
                     .fillMaxWidth()
-                    .padding(top = 16.dp)
+                    .padding(top = 16.dp),
+
             )
             ExposedDropdownMenu(
                 expanded = isExpanded,
                 onDismissRequest = { isExpanded = false },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                districts.filter { it != chosenDistrict }.forEach {valgtDistrict ->
+                districts.filter { it != chosenDistrict }.forEach { picked ->
                     DropdownMenuItem(
                         modifier = Modifier.fillMaxWidth(),
-                        text = { Text(text = valgtDistrict, modifier = Modifier.fillMaxWidth()) },
+                        text = {
+                            Text(
+                                text = picked,
+                                modifier = Modifier.fillMaxWidth(),
+                                color = Blush
+                            ) },
                         onClick = {
-                            chosenDistrict = valgtDistrict
+                            chosenDistrict = picked
                             isExpanded = false
-                            /*
-                            when(district.indexOf(selectedDistrict)) {
-
-                                0 -> homeScreenViewModel.getPartyVotes(District.ONE)
-                                1 -> homeScreenViewModel.getPartyVotes(District.TWO)
-                                2 -> homeScreenViewModel.getPartyVotes(District.THREE)
-
+                            when(districts.indexOf(chosenDistrict)) {
+                                0 -> viewModel.getPartyVotes(District.ONE)
+                                1 -> viewModel.getPartyVotes(District.TWO)
+                                2 -> viewModel.getPartyVotes(District.THREE)
                             }
-
-                             */
                         }
                     )
                 }
