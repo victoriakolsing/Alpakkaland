@@ -31,7 +31,7 @@ class AggregatedVotesDataSource {
         }
     }
 
-    suspend fun fetchAggregatedVotesFromUrl(): List<DistrictVotes> {
+    suspend fun getAggregatedVotes(): List<DistrictVotes> {
         val response: ApiResults =
             try {
                 client.get(url).body()
