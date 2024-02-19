@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package no.uio.ifi.in2000.victoryk.oblig2.ui.home
+package no.uio.ifi.in2000.victoryk.oblig2.ui.party
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -31,7 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import no.uio.ifi.in2000.victoryk.oblig2.Blush
-import no.uio.ifi.in2000.victoryk.oblig2.LightPink
+import no.uio.ifi.in2000.victoryk.oblig2.SuperLightPink
+import no.uio.ifi.in2000.victoryk.oblig2.ui.home.getColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -48,7 +49,7 @@ fun PartyScreen(
             TopAppBar(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                 colors = topAppBarColors(
-                    containerColor = LightPink,
+                    containerColor = SuperLightPink,
                     titleContentColor = Blush
                 ),
                 title = {

@@ -12,8 +12,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import no.uio.ifi.in2000.victoryk.oblig2.ui.home.HomeScreen
-import no.uio.ifi.in2000.victoryk.oblig2.ui.home.PartyScreen
-import no.uio.ifi.in2000.victoryk.oblig2.ui.home.PartyViewModel
+import no.uio.ifi.in2000.victoryk.oblig2.ui.party.PartyScreen
+import no.uio.ifi.in2000.victoryk.oblig2.ui.party.PartyViewModel
 import no.uio.ifi.in2000.victoryk.oblig2.ui.theme.Victoryk_oblig2Theme
 
 val SuperLightPink = Color(0xfffff0f3)

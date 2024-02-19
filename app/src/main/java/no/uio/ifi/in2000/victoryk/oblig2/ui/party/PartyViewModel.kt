@@ -1,4 +1,4 @@
-package no.uio.ifi.in2000.victoryk.oblig2.ui.home
+package no.uio.ifi.in2000.victoryk.oblig2.ui.party
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

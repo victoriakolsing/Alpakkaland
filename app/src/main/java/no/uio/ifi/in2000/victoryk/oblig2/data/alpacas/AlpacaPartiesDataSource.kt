@@ -23,7 +23,7 @@ class AlpacaPartiesDataSource {
         }
     }
     suspend fun getPartiesFromUrl(): List<PartyInfo> {
-        Log.i("test", "trying to fetch data")
+        Log.i("test", "trying to fetch alpaca data")
         val response: Parties =
             try {
             client.get(url).body()
