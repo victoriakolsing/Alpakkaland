@@ -25,12 +25,6 @@ fun VoteList(
 
     val partyUiState: HomeUiState by viewModel.partyList.collectAsState()
 
-    val votesUiState = when (district) {
-        "District 1" -> viewModel.districtOneUiState.collectAsState()
-        "District 2" -> viewModel.districtTwoUiState.collectAsState()
-        "District 3" -> viewModel.districtThreeUiState.collectAsState()
-        else -> viewModel.districtOneUiState.collectAsState() // Default or handle error
-    }.value
 
     Column( modifier = Modifier
             .fillMaxWidth()
@@ -51,7 +45,7 @@ fun VoteList(
             if (district == "District 1") {
                 val parties = partyUiState.parties
                 var counter = 0
-                votesUiState.districtOneVotes.let { listVotes ->
+                votesUiStateOne.districtOneVotes.let { listVotes ->
                     listVotes.forEach { districtVotes ->
                         Row(modifier = Modifier.padding(8.dp)){
                             Text(text = parties[counter].name)
@@ -66,7 +60,7 @@ fun VoteList(
             if (district == "District 2") {
                 val parties = partyUiState.parties
                 var counter = 0
-                votesUiStateOne.districtOneVotes.let { listVotes ->
+                votesUiStateTwo.districtOneVotes.let { listVotes ->
                     listVotes.forEach { districtVotes ->
                         Row(modifier = Modifier.padding(8.dp)) {
                             Text(text = parties[counter].name)
@@ -81,7 +75,7 @@ fun VoteList(
             if (district == "District 3") {
                 val parties = partyUiState.parties
                 var counter = 0
-                votesUiState.districtOneVotes.let { listVotes ->
+                votesUiStateThree.districtOneVotes.let { listVotes ->
                     listVotes.forEach { districtVotes ->
                         Row(modifier = Modifier.padding(8.dp)) {
                             Text(text = parties[counter].name)
