@@ -2,7 +2,6 @@ package no.uio.ifi.in2000.victoryk.oblig2.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,14 +22,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import no.uio.ifi.in2000.victoryk.oblig2.SuperLightPink
 
-// Viser kortene i en LazyColumn eller LazyVerticalGrid.
-// Denne skal kun observere UI-staten som ligger i HomeViewModel
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlpacaCard(
     id: String,
@@ -39,16 +32,14 @@ fun AlpacaCard(
     img: String,
     leader: String,
     color: String,
-    navController: NavController
+    onNavigateToParty: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
-            .clickable {
-                navController.navigate("PartyScreen/$id")
-            }
             .padding(all = 8.dp)
             .fillMaxSize(),
-        colors = CardDefaults.cardColors(SuperLightPink)
+        colors = CardDefaults.cardColors(SuperLightPink),
+        onClick = { onNavigateToParty(id) }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -72,7 +63,10 @@ fun AlpacaCard(
 }
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
+fun HomeScreen(
+    viewModel: HomeViewModel = HomeViewModel(),
+    onNavigateToParty: (String) -> Unit
+) {
     val partyInfoList by viewModel.partyList.collectAsState()
 
     LazyColumn(
@@ -87,7 +81,8 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
                 img = partyInfo.img,
                 leader = partyInfo.leader,
                 color = partyInfo.color,
-                navController = navController)
+                onNavigateToParty = onNavigateToParty
+            )
         }
     }
 }

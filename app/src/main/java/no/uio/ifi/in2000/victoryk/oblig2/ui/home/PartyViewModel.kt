@@ -19,7 +19,7 @@ class PartyViewModel(savedStateHandle: SavedStateHandle): ViewModel() {
     private val _uiState = MutableStateFlow(PartyInfo())
     val uiState: StateFlow<PartyInfo> = _uiState.asStateFlow()
 
-     fun showPartyInfo(partyId: String) {
+     fun showPartyInfo() {
         viewModelScope.launch {
             _uiState.onStart {
                  party = repo.getById(partyId.toInt())!!

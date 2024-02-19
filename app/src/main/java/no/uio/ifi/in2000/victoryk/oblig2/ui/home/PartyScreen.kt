@@ -35,7 +35,9 @@ import no.uio.ifi.in2000.victoryk.oblig2.LightPink
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PartyScreen(
-    viewModel: PartyViewModel = PartyViewModel(savedStateHandle = SavedStateHandle())) {
+    partyId: String,
+    viewModel: PartyViewModel = PartyViewModel(savedStateHandle = SavedStateHandle())
+) {
 
     val state by viewModel.uiState.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
