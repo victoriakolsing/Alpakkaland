@@ -22,13 +22,16 @@ class AlpacaPartiesDataSource {
             Log.i("YEE", "Client started")
         }
     }
-    suspend fun fml(): ArrayList<PartyInfo> {
+    suspend fun getPartiesFromUrl(): List<PartyInfo> {
         Log.i("test", "trying to fetch data")
-        val response: Parties = client.get(url).body();
-        // Log.i("test", "$response")
-        // val resBody: List<PartyInfo> = response.body();
-        // val typeToken = object : TypeToken<String>() {}.type
-        return response.parties; // Gson().fromJson(response, typeToken)
+        val response: Parties =
+            try {
+            client.get(url).body()
+        } catch (e: Exception) {
+            Log.e("YIKES", "Couldn't fetch data from url $url")
+            Parties(emptyList())
+        }
+        return response.parties
     }
 }
 

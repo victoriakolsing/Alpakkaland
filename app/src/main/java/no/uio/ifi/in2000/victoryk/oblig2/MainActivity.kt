@@ -8,13 +8,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import no.uio.ifi.in2000.victoryk.oblig2.ui.home.HomeScreen
 import no.uio.ifi.in2000.victoryk.oblig2.ui.home.PartyScreen
+import no.uio.ifi.in2000.victoryk.oblig2.ui.home.PartyViewModel
 import no.uio.ifi.in2000.victoryk.oblig2.ui.theme.Victoryk_oblig2Theme
 
 val SuperLightPink = Color(0xfffff0f3)
@@ -33,30 +32,26 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // NAVIGATION ---------------------------------------------------------------------------------------------------------------------
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = "HomeScreen") {
-                        composable(
-                            route = "HomeScreen") {
-                            HomeScreen(onNavigateToParty = {
-                                navController.navigate("PartyScreen/{partyId}")
-                            })
+                    NavHost(
+                        navController = navController,
+                        startDestination = "HomeScreen"
+                    ) {
+                        composable(route = "HomeScreen") {
+                            HomeScreen(navController)
                         }
-                        composable(
-                            route = "PartyScreen/{partyId}",
-                            arguments = listOf(
-                                navArgument("partyId") {
-                                    type = NavType.StringType
-                                }
+                        composable(route = "PartyScreen/{partyId}") { backstackEntry ->
+                            val partyId = backstackEntry.arguments?.getString("partyId").toString()
+                            PartyScreen(
+                                navController = navController,
+                                viewModel = PartyViewModel(partyId)
                             )
-                        ) { val param = it.arguments?.getString("partyId") ?: ""
-                            PartyScreen(param) }
+                        }
                     }
-                    // APP START ---------------------------------------------------------------------------------------------------------------------
-
-
-
                 }
             }
         }
     }
 }
+
+
 

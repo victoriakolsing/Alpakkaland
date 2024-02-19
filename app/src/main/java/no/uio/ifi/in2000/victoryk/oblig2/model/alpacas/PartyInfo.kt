@@ -6,17 +6,17 @@ import kotlinx.serialization.Serializable
 // Dataklasse som inneholder de samme feltene som i endepunktet
 @Serializable
 data class PartyInfo (
-    val id: String = "",
-    val name: String = "",
-    val leader: String = "",
-    val img: String = "",
-    val color: String = "",
-    val description: String = ""
+    var id: String,
+    val name: String,
+    val leader: String,
+    val img: String,
+    val color: String,
+    val description: String
 )
 
 @Serializable
 data class Parties (
-    val parties: ArrayList<PartyInfo>
+    val parties: List<PartyInfo>
 )
 
 

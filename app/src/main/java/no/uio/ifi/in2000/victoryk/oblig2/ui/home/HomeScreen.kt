@@ -2,6 +2,7 @@ package no.uio.ifi.in2000.victoryk.oblig2.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,24 +23,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import no.uio.ifi.in2000.victoryk.oblig2.SuperLightPink
+import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
 
 @Composable
 fun AlpacaCard(
-    id: String,
-    name: String,
-    img: String,
-    leader: String,
-    color: String,
-    onNavigateToParty: (String) -> Unit
-) {
+    party: PartyInfo,
+    navController: NavController
+    ) {
     Card(
         modifier = Modifier
+            .clickable {
+                navController.navigate("PartyScreen/${party.id}")
+            }
             .padding(all = 8.dp)
             .fillMaxSize(),
         colors = CardDefaults.cardColors(SuperLightPink),
-        onClick = { onNavigateToParty(id) }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -48,40 +49,36 @@ fun AlpacaCard(
                 .fillMaxSize()
                 .padding(all = 16.dp)
         ) {
-            Text(text = name, fontWeight = FontWeight.Bold)
+            Text(text = party.name, fontWeight = FontWeight.Bold)
             Image(
-                painter = rememberAsyncImagePainter(img),
+                painter = rememberAsyncImagePainter(party.img),
                 contentDescription = null,
                 modifier = Modifier
                     .size(80.dp)
                     .clip(CircleShape)
-                    .border(8.dp, color = getColor(color), CircleShape)
+                    .border(8.dp, color = getColor(party.color), CircleShape)
             )
-            Text(text = "Leder: $leader")
+            Text(text = "Leder: ${party.leader}")
         }
     }
 }
 
 @Composable
 fun HomeScreen(
+    navController: NavController,
     viewModel: HomeViewModel = HomeViewModel(),
-    onNavigateToParty: (String) -> Unit
 ) {
-    val partyInfoList by viewModel.partyList.collectAsState()
+    val uiState by viewModel.partyList.collectAsState()
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(partyInfoList) {partyInfo ->
+        items(uiState.parties) {partyInfo ->
             AlpacaCard(
-                id = partyInfo.id,
-                name = partyInfo.name,
-                img = partyInfo.img,
-                leader = partyInfo.leader,
-                color = partyInfo.color,
-                onNavigateToParty = onNavigateToParty
+                party = partyInfo,
+                navController = navController
             )
         }
     }

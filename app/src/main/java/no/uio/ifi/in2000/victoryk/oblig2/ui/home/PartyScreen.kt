@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -24,21 +26,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import no.uio.ifi.in2000.victoryk.oblig2.Blush
 import no.uio.ifi.in2000.victoryk.oblig2.LightPink
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PartyScreen(
-    partyId: String,
-    viewModel: PartyViewModel = PartyViewModel(savedStateHandle = SavedStateHandle())
+    navController: NavController,
+    viewModel: PartyViewModel,
 ) {
-
     val state by viewModel.uiState.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
@@ -55,43 +56,34 @@ fun PartyScreen(
                 }
             )
         }
-    ) {
-        PartyLayout(
-            name = state.name,
-            leader = state.leader,
-            img = state.img,
-            color = state.color,
-            description = state.description
-        )
+    ) { innerPadding ->
+        LazyColumn {
+            items(state.party) { party ->
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.padding(innerPadding)
+                ) {
+                    Text(
+                        text = party.name,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Image(
+                        painter = rememberAsyncImagePainter(model = party.img),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(64.dp)
+                            .clip(CircleShape)
+                            .border(2.dp, color = getColor(party.color), CircleShape)
+                    )
+                    Text(text = "Navn: ${party.leader}")
+                    Text(
+                        text = party.description,
+                        modifier = Modifier.padding(all = 16.dp)
+                    )
+                }
+            }
+        }
     }
 }
 
-@Composable
-fun PartyLayout(
-    name: String,
-    leader: String,
-    img: String,
-    color: String,
-    description: String
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.padding(all = 8.dp)
-    ) {
-        Text(
-            text = name,
-            style = typography.titleMedium
-        )
-        Image(
-            painter = rememberAsyncImagePainter(model = img),
-            contentDescription = null,
-            modifier = Modifier
-                .size(64.dp)
-                .clip(CircleShape)
-                .border(2.dp, color = Color(color.toInt()), CircleShape)
-        )
-        Text(text = "Navn: $leader")
-        Text(description)
-    }
-}
