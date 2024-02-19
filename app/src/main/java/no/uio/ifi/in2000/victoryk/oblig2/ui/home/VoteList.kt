@@ -1,88 +1,80 @@
 package no.uio.ifi.in2000.victoryk.oblig2.ui.home
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import no.uio.ifi.in2000.victoryk.oblig2.Blush
-import no.uio.ifi.in2000.victoryk.oblig2.LightPink
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun VoteList(
-    parties: List<String>,
-    votes: List<Int>
+    viewModel: HomeViewModel,
+    district: String
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        Column(
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.Start
-        ) {
-            Text( // Jeg vet dette ikke er optimalt, men noe som funker innen tidsfristen > god kodeskikk
-                text = "Parti",
-                fontWeight = FontWeight.Bold,
-                color = Blush
-            )
-            Text(
-                text = parties[0],
-                color = LightPink
-            )
-            Text(
-                text = parties[1],
-                color = LightPink
-            )
-            Text(
-                text = parties[2],
-                color = LightPink
-            )
-            Text(
-                text = parties[3],
-                color = LightPink
-            )
-        }
-        Column(
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.End
-        ) {
-            Text(
-                text = "Stemmer",
-                fontWeight = FontWeight.Bold,
-                color = Blush
-            )
-            Text(
-                text = "${votes[0]}",
-                color = LightPink
-            )
-            Text(
-                text = "${votes[1]}",
-                color = LightPink
-            )
-            Text(
-                text = "${votes[2]}",
-                color = LightPink
-            )
-            Text(
-                text = "${votes[3]}",
-                color = LightPink
-            )
+    val votesUiStateOne: VotesUiState by viewModel.districtOneUiState.collectAsState()
+    val votesUiStateTwo: VotesUiState by viewModel.districtOneUiState.collectAsState()
+    val votesUiStateThree: VotesUiState by viewModel.districtOneUiState.collectAsState()
+
+    val partyUiState: HomeUiState by viewModel.partyList.collectAsState()
+
+    val votesUiState = when (district) {
+        "District 1" -> viewModel.districtOneUiState.collectAsState()
+        "District 2" -> viewModel.districtTwoUiState.collectAsState()
+        "District 3" -> viewModel.districtThreeUiState.collectAsState()
+        else -> viewModel.districtOneUiState.collectAsState() // Default or handle error
+    }.value
+
+    Column {
+        Row {
+            if (district == "District 1") {
+                val parties = partyUiState.parties
+                var counter = 0
+                votesUiState.districtOneVotes.let { listVotes ->
+                    listVotes.forEach { districtVotes ->
+                        Row(modifier = Modifier.padding(8.dp)){
+                            Text(text = parties[counter].name)
+                            Spacer(modifier = Modifier.padding(8.dp))
+                            Text(text = districtVotes.numberOfVotesForParty.toString())
+                            counter++
+                        }
+                    }
+                }
+            }
+
+            if (district == "District 2") {
+                val parties = partyUiState.parties
+                var counter = 0
+                votesUiState.districtOneVotes.let { listVotes ->
+                    listVotes.forEach { districtVotes ->
+                        Row(modifier = Modifier.padding(8.dp)) {
+                            Text(text = parties[counter].name)
+                            Spacer(modifier = Modifier.padding(8.dp))
+                            Text(text = districtVotes.numberOfVotesForParty.toString())
+                            counter++
+                        }
+                    }
+                }
+            }
+
+            if (district == "District 3") {
+                val parties = partyUiState.parties
+                var counter = 0
+                votesUiState.districtOneVotes.let { listVotes ->
+                    listVotes.forEach { districtVotes ->
+                        Row(modifier = Modifier.padding(8.dp)) {
+                            Text(text = parties[counter].name)
+                            Spacer(modifier = Modifier.padding(8.dp))
+                            Text(text = districtVotes.numberOfVotesForParty.toString())
+                            counter++
+                        }
+                    }
+                }
+            }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewVoteList() {
-    val parties: List<String> = listOf("ONE", "TWO", "THREE", "FOUR")
-    val votes: List<Int> = listOf(1, 2, 3, 4)
-    VoteList(parties, votes)
 }
