@@ -100,7 +100,7 @@ fun HomeScreen(
             OutlinedTextField(
                 value = chosenDistrict,
                 onValueChange = {},
-                placeholder = { Text(text = "Please hoose district") },
+                placeholder = { Text(text = "Please choose district") },
                 readOnly = true,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
                 colors = ExposedDropdownMenuDefaults.textFieldColors(),
