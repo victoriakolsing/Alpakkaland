@@ -1,6 +1,5 @@
 package no.uio.ifi.in2000.victoryk.oblig2.data.votes
 
-import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -23,7 +22,6 @@ class AggregatedVotesDataSource {
     private val client = HttpClient() {
         install(ContentNegotiation) {
             json(Json)
-            Log.i("YEE", "Client started")
         }
     }
 

@@ -26,11 +26,11 @@ class AlpacaPartiesDataSource {
         Log.i("test", "trying to fetch alpaca data")
         val response: Parties =
             try {
-            client.get(url).body()
-        } catch (e: Exception) {
-            Log.e("YIKES", "Couldn't fetch data from url $url")
-            Parties(emptyList())
-        }
+                client.get(url).body()
+            } catch (e: Exception) {
+                Log.e("YIKES", "Couldn't fetch data from url $url")
+                Parties(emptyList())
+            }
         return response.parties
     }
 }
