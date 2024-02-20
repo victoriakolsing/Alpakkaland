@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.victoryk.oblig2.data.alpacas.AlpacaPartiesRepository
 import no.uio.ifi.in2000.victoryk.oblig2.data.votes.VotesRepository
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
-import no.uio.ifi.in2000.victoryk.oblig2.model.votes.District
 import no.uio.ifi.in2000.victoryk.oblig2.model.votes.DistrictVotes
 
 data class HomeUiState(
@@ -50,35 +49,6 @@ class HomeViewModel(): ViewModel() {
         }
     }
 
-    private fun loadVotes() {
-        viewModelScope.launch()  {
-
-            _districtOneUiState.update {getVotesUiState ->
-                val votes = voteRepo.getVotesOne()
-                getVotesUiState.copy(districtOneVotes = votes)
-            }
-
-            _districtTwoUiState.update { getVotesUiState ->
-                val votes = voteRepo.getVotesTwo()
-
-                getVotesUiState.copy(districtTwoVotes = votes)
-            }
-
-            _districtThreeUiState.update { getVotesUiState ->
-                val votes = voteRepo.getVotesThree()
-
-                getVotesUiState.copy(districtThreeVotes = votes)
-            }
-
-        }
-    }
-
-
-    fun getPartyVotes(district: District) {
-        viewModelScope.launch {
-            voteRepo.getAllVotes(district)
-        }
-    }
 
     // ON INITIALIZATION
     init {

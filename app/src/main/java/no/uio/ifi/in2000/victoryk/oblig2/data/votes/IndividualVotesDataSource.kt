@@ -22,8 +22,7 @@ class IndividualVotesDataSource() {
             json(Json)
         }
     }
-
-   suspend fun getVotesOne(): List<DistrictVotes> {
+    fun getVotesOne(): List<DistrictVotes> {
        val individualVotes: List<IndividualVotes>
        runBlocking {
            individualVotes = try {
@@ -38,7 +37,7 @@ class IndividualVotesDataSource() {
        }
    }
 
-    suspend fun getVotesTwo(): List<DistrictVotes> {
+    fun getVotesTwo(): List<DistrictVotes> {
         val individualVotes: List<IndividualVotes>
         runBlocking {
             individualVotes = try {
