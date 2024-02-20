@@ -7,13 +7,9 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import no.uio.ifi.in2000.victoryk.oblig2.model.votes.AggregatedVotes
 import no.uio.ifi.in2000.victoryk.oblig2.model.votes.District
 import no.uio.ifi.in2000.victoryk.oblig2.model.votes.DistrictVotes
-
-data class AggregatedVotes(
-    val partyId: String,
-    val votes: Int
-)
 
 data class ApiResults(
     val aggregatedVotes: List<AggregatedVotes>

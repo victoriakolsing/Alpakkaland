@@ -8,11 +8,9 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import no.uio.ifi.in2000.victoryk.oblig2.model.votes.District
 import no.uio.ifi.in2000.victoryk.oblig2.model.votes.DistrictVotes
+import no.uio.ifi.in2000.victoryk.oblig2.model.votes.IndividualVotes
 
 
-data class IndividualVotes(
-    val id: String
-)
 class IndividualVotesDataSource() {
     private val district1 = "https://www.uio.no/studier/emner/matnat/ifi/IN2000/v24/obligatoriske-oppgaver/district1.json"
     private val district2 = "https://www.uio.no/studier/emner/matnat/ifi/IN2000/v24/obligatoriske-oppgaver/district2.json"
