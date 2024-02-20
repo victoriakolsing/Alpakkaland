@@ -37,7 +37,6 @@ import coil.compose.rememberAsyncImagePainter
 import no.uio.ifi.in2000.victoryk.oblig2.Blush
 import no.uio.ifi.in2000.victoryk.oblig2.SuperLightPink
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
-import no.uio.ifi.in2000.victoryk.oblig2.model.votes.District
 
 @Composable
 fun AlpacaCard(
@@ -85,15 +84,12 @@ fun HomeScreen(
     val districts: List<String> = listOf("District 1", "District 2", "District 3")
     var chosenDistrict by remember { mutableStateOf("") }
 
-    val alpacaUiState: HomeUiState by viewModel.partyList.collectAsState()
-    val votesUiStateOne: VotesUiState by viewModel.districtOneUiState.collectAsState()
-    val votesUiStateTwo: VotesUiState by viewModel.districtTwoUiState.collectAsState()
-    val votesUiStateThree: VotesUiState by viewModel.districtThreeUiState.collectAsState()
-
-
     Column(
         modifier = Modifier.padding(all = 8.dp)
     ) {
+
+
+
         ExposedDropdownMenuBox(
             expanded = isExpanded,
             onExpandedChange = { isExpanded= it && uiState.parties.isNotEmpty() },
@@ -132,17 +128,24 @@ fun HomeScreen(
                         onClick = {
                             chosenDistrict = picked
                             isExpanded = false
-                            when(districts.indexOf(chosenDistrict)) {
-                                0 -> viewModel.getPartyVotes(District.ONE)
-                                1 -> viewModel.getPartyVotes(District.TWO)
-                                2 -> viewModel.getPartyVotes(District.THREE)
-                            }
+
+                            // SHOW VOTES
+
                         }
                     )
                 }
             }
         }
+
+
+
+
+
         VoteList(viewModel = viewModel, district = chosenDistrict)
+
+
+
+
 
         LazyColumn(
             modifier = Modifier
