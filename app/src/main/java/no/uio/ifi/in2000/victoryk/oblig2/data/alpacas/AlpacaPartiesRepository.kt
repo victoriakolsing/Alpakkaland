@@ -23,7 +23,4 @@ class AlpacaPartiesRepository() {
 
         return parties.zip(mapped).toMap()
     }
-
-
-
 }

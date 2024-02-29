@@ -121,12 +121,11 @@ fun VoteList(
             Row(
                 verticalAlignment = Alignment.Top
             ) {
-                //Text(text = votes.keys.joinToString("\n"))
-                Text(text = "get")
+                Text(text = votes.keys.joinToString("\n"))
                 Spacer(modifier = Modifier
                     .weight(1f)
                     .height(20.dp))
-                //Text(text = votes.values.joinToString("\n"))
+                Text(text = votes.values.joinToString("\n"))
             }
         }
 

@@ -6,6 +6,7 @@ import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import no.uio.ifi.in2000.victoryk.oblig2.model.votes.AggregatedVotes
 import no.uio.ifi.in2000.victoryk.oblig2.model.votes.District
@@ -14,6 +15,7 @@ import no.uio.ifi.in2000.victoryk.oblig2.model.votes.DistrictVotes
 
 
 
+@Serializable
 data class PartiesD (
     val parties: List<DistrictVotes>
 )
@@ -32,21 +34,21 @@ class AggregatedVotesDataSource {
     suspend fun getAggregatedVotesThree(): List<DistrictVotes> {
         val response: PartiesD =
             try {
-                Log.d("YIKES", "found $url")
+                Log.d("YIKES", "check check found $url")
                 client.get(url).body()
             } catch (e: Exception) {
                 Log.e("YIKES", "Couldn't fetch data from url $url")
                 PartiesD(emptyList())
             }
 
-        Log.i("response", "${response.parties.size}")
+        Log.i("response", "parties size: ${response.parties.size}")
         Log.i("tag", "WE GET HERE")
 
         val partiesVote: List<AggregatedVotes> = response.parties.map {
             AggregatedVotes(it.partyId, it.votes)
         }
 
-        Log.i("YO", "${partiesVote.size}") // PartiesVote == 0
+        Log.i("YO", "partiesVote size: ${partiesVote.size}") // PartiesVote == 0
 
 
 

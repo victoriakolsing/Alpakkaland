@@ -76,9 +76,7 @@ fun HomeScreen(
         modifier = Modifier.padding(all = 8.dp)
     ) {
 
-        VoteList(
-            viewModel = viewModel
-        )
+        VoteList(viewModel = viewModel)
 
         LazyColumn(
             modifier = Modifier
