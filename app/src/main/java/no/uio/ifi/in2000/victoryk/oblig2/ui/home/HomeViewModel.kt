@@ -9,16 +9,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.victoryk.oblig2.data.alpacas.AlpacaPartiesRepository
 import no.uio.ifi.in2000.victoryk.oblig2.model.alpacas.PartyInfo
-import no.uio.ifi.in2000.victoryk.oblig2.model.votes.DistrictVotes
+import no.uio.ifi.in2000.victoryk.oblig2.model.votes.District
 
 data class HomeUiState(
     val parties: List<PartyInfo> = emptyList()
 )
 
 data class VotesUiState(
-    val districtOneVotes: List<DistrictVotes> = listOf(),
-    val districtTwoVotes: List<DistrictVotes> = listOf(),
-    val districtThreeVotes: List<DistrictVotes> = listOf()
+    val districtOneVotes: Map<String, Int> = emptyMap(),
+    val districtTwoVotes: Map<String, Int> = emptyMap(),
+    val districtThreeVotes: Map<String, Int> = emptyMap()
 )
 
 
@@ -26,6 +26,9 @@ class HomeViewModel(): ViewModel() {
     private val repo: AlpacaPartiesRepository = AlpacaPartiesRepository()
     private val _partyList = MutableStateFlow(HomeUiState())
     val partyList: StateFlow<HomeUiState> = _partyList.asStateFlow()
+
+    private val _voteState = MutableStateFlow(VotesUiState())
+    val voteState: StateFlow<VotesUiState> = _voteState.asStateFlow()
 
     private fun loadPartyList() {
         viewModelScope.launch {
@@ -35,15 +38,18 @@ class HomeViewModel(): ViewModel() {
             }
         }
     }
-
-    init {
-        viewModelScope.launch {
-            repo.getParties()
-        }
-    }
-
     // ON INITIALIZATION
     init {
         loadPartyList()
+        getVotes()
+    }
+
+    private fun getVotes() {
+        viewModelScope.launch {
+            _voteState.update { state ->
+                val votes3 = repo.getVotes(District.THREE)
+                state.copy(districtThreeVotes = votes3)
+            }
+        }
     }
 }
