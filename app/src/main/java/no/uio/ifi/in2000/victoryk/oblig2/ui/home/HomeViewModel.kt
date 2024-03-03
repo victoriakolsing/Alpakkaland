@@ -45,7 +45,7 @@ class HomeViewModel(): ViewModel() {
             }
         }
     }
-    fun getVotes() {
+    private fun getVotes() {
         viewModelScope.launch {
             _voteState.update { state ->
                 val votes1 = repo.getVotes(District.ONE)

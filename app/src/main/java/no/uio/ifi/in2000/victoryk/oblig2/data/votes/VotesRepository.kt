@@ -11,11 +11,11 @@ class VotesRepository {
         return individualVotes.getVotesOne()
     }
 
-    suspend fun getIndividualVotesTwo() : List<DistrictVotes> {
+    private suspend fun getIndividualVotesTwo() : List<DistrictVotes> {
         return individualVotes.getVotesTwo()
     }
 
-    suspend fun getAggregatedVotes(): List<DistrictVotes> {
+    private suspend fun getAggregatedVotes(): List<DistrictVotes> {
         return aggregatedVotes.getAggregatedVotesThree()
     }
 
@@ -29,6 +29,5 @@ class VotesRepository {
             District.TWO -> districtTwo
             District.THREE -> districtThree
         }
-
     }
 }
