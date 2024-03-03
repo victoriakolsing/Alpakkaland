@@ -8,7 +8,7 @@ class VotesRepository {
     private val aggregatedVotes = AggregatedVotesDataSource()
 
     private suspend fun getIndividualVotesOne() : List<DistrictVotes> {
-        return individualVotes.getVotesTwo()
+        return individualVotes.getVotesOne()
     }
 
     suspend fun getIndividualVotesTwo() : List<DistrictVotes> {

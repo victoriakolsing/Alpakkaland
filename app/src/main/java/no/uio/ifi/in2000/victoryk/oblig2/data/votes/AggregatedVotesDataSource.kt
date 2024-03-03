@@ -8,7 +8,6 @@ import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import no.uio.ifi.in2000.victoryk.oblig2.model.votes.AggregatedVotes
 import no.uio.ifi.in2000.victoryk.oblig2.model.votes.District
 import no.uio.ifi.in2000.victoryk.oblig2.model.votes.DistrictVotes
 
@@ -37,14 +36,14 @@ class AggregatedVotesDataSource {
                 PartiesD(emptyList())
             }
 
+        /*
         Log.i("response", "parties size: ${response.parties.size}")
         Log.i("tag", "WE GET HERE")
 
         val partiesVote: List<AggregatedVotes> = response.parties.map {
             AggregatedVotes(it.partyId, it.votes)
         }
-
-        /* Log.i("YO", "partiesVote size: ${partiesVote.size}") // PartiesVote == 0
+        Log.i("YO", "partiesVote size: ${partiesVote.size}") // PartiesVote == 0
 
         val vote1 = DistrictVotes(District.THREE, partiesVote[0].partyId, partiesVote[0].votes)
         val vote2 = DistrictVotes(District.THREE, partiesVote[1].partyId, partiesVote[1].votes)
