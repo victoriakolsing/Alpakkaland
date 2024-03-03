@@ -7,17 +7,28 @@ class VotesRepository {
     private val individualVotes = IndividualVotesDataSource()
     private val aggregatedVotes = AggregatedVotesDataSource()
 
-    suspend fun getVotes(district: District): List<DistrictVotes> {
-        return when (district) {
-            District.ONE -> {
-                individualVotes.getVotesOne()
-            }
-            District.TWO -> {
-                individualVotes.getVotesTwo()
-            }
-            District.THREE -> {
-                aggregatedVotes.getAggregatedVotesThree()
-            }
+    private suspend fun getIndividualVotesOne() : List<DistrictVotes> {
+        return individualVotes.getVotesTwo()
+    }
+
+    suspend fun getIndividualVotesTwo() : List<DistrictVotes> {
+        return individualVotes.getVotesTwo()
+    }
+
+    suspend fun getAggregatedVotes(): List<DistrictVotes> {
+        return aggregatedVotes.getAggregatedVotesThree()
+    }
+
+    suspend fun getDistrictVotes(district: District): List<DistrictVotes> {
+        val districtOne: List<DistrictVotes> = getIndividualVotesOne()
+        val districtTwo: List<DistrictVotes> = getIndividualVotesTwo()
+        val districtThree: List<DistrictVotes> = getAggregatedVotes()
+
+        return when(district) {
+            District.ONE -> districtOne
+            District.TWO -> districtTwo
+            District.THREE -> districtThree
         }
+
     }
 }

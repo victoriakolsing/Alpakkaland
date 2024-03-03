@@ -22,14 +22,14 @@ class IndividualVotesDataSource() {
         }
     }
     suspend fun getVotesOne(): List<DistrictVotes> {
-        val individualVotes: List<IndividualVotes> =
+        val votes: List<IndividualVotes> =
             try {
                 client.get(district1).body()
             } catch (e: Exception) {
                 emptyList()
-        }
+            }
 
-        val countVotes = individualVotes.groupingBy { it.id }.eachCount().toMap()
+        /* val countVotes = individualVotes.groupingBy { it.id }.eachCount().toMap()
 
         val votes1 = DistrictVotes(District.ONE, "1", countVotes.getValue("1"))
         val votes2 = DistrictVotes(District.ONE, "2", countVotes.getValue("2"))
@@ -37,20 +37,23 @@ class IndividualVotesDataSource() {
         val votes4 = DistrictVotes(District.ONE, "4", countVotes.getValue("4"))
 
 
-        val allVotes: List<DistrictVotes> = listOf(votes1, votes2, votes3, votes4)
+        return listOf(votes1, votes2, votes3, votes4)
+        */
 
-        return allVotes
-       }
+        return listOf("1", "2", "3", "4").map {id ->
+            DistrictVotes(District.ONE, id, votes.count {it.id == id})
+        }
+    }
 
     suspend fun getVotesTwo(): List<DistrictVotes> {
-        val individualVotes: List<IndividualVotes> =
+        val votes: List<IndividualVotes> =
             try {
                 client.get(district2).body()
             } catch (e: Exception) {
                 emptyList()
             }
 
-        val countVotes = individualVotes.groupingBy { it.id }.eachCount().toMap()
+       /* val countVotes = individualVotes.groupingBy { it.id }.eachCount().toMap()
 
         val votes1 = DistrictVotes(District.TWO, "1", countVotes.getValue("1"))
         val votes2 = DistrictVotes(District.TWO, "2", countVotes.getValue("2"))
@@ -58,9 +61,13 @@ class IndividualVotesDataSource() {
         val votes4 = DistrictVotes(District.TWO, "4", countVotes.getValue("4"))
 
 
-        val allVotes: List<DistrictVotes> = listOf(votes1, votes2, votes3, votes4)
+        return listOf(votes1, votes2, votes3, votes4)
+        */
 
-        return allVotes
+        return listOf("1", "2", "3", "4").map {id ->
+            DistrictVotes(District.TWO, id, votes.count {it.id == id})
+
+        }
     }
 
    }

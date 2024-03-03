@@ -18,7 +18,7 @@ class AlpacaPartiesRepository() {
 
     suspend fun getVotes(district: District): Map<String, Int> {
         val parties: List<String> = listOf("AlpacaNorth", "AlpacaSouth", "AlpacaEast", "AlpacaWest")
-        val vote: List<DistrictVotes> = votesRepo.getVotes(district)
+        val vote: List<DistrictVotes> = votesRepo.getDistrictVotes(district)
         val mapped: List<Int> = vote.map { it.votes }
 
         return parties.zip(mapped).toMap()
